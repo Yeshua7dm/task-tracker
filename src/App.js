@@ -1,43 +1,38 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
+import AddTask from "./components/AddTask";
 
 // use hooks for state in functional component
 // replaces the need for class components
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [showForm, setShowForm] = useState(false)
   const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Run a football game",
-      day: "Feb 5th at 2pm",
-      reminder: true,
-    }, 
-    {
-      id: 2,
-      text: "Borrowed a football game",
-      day: "April 5th at 2pm",
-      reminder: true,
-    },
-    {
-      id: 3,
-      text: "steal a football game",
-      day: "Jun 5th at 2pm",
-      reminder: true,
-    },
-    {
-      id: 4,
-      text: "Buy a football",
-      day: "May 5th at 2pm",
-      reminder: true,
-    },
   ]);
+
+  // useEffect(() => {
+  //   const getTasks = async() => {
+  //     const response = await fetch('https://localhost:5000/tasks')
+  //     const data = await response.json()
+  //     console.log(data)
+  //   }
+
+  //   getTasks()
+  // }, [])
 
   // ceate the function to delete task from the UI
   const deleteTask = (id) => {
     setTasks(tasks.filter((task)=> task.id !== id))
   }
 // create function to add task to the displayed tasks
+  const addTask = (task) => {
+    console.log(task)
+    
+    const id = tasks.length === 0 ? 1 : tasks[tasks.length-1].id + 1;
+    const newTask = {id, ...task}
+    setTasks([...tasks, newTask])
+  }
 
 // function to toggle reminder
   const toggleReminder = (id) => {
@@ -50,7 +45,8 @@ function App() {
 
   return (
     <div className="container">
-        <Header />
+        <Header onAddNew={()=> setShowForm(!showForm)} toggleAdd={showForm} />
+        {showForm && <AddTask onAdd={addTask} />}
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
     </div>
   );

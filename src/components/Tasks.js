@@ -6,6 +6,9 @@ const Tasks = ({tasks, onDelete, onToggle}) => {
             {tasks.map((task)=>{
                return <Task key={task.id} task={task} onDelete={onDelete} onToggle={onToggle} />
             })}
+            {
+                tasks.length === 0 ? <h3>No Tasks to show</h3> : ''
+            }
         </>
     )
 }
