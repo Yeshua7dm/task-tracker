@@ -33,14 +33,25 @@ function App() {
     },
   ]);
 
+  // ceate the function to delete task from the UI
   const deleteTask = (id) => {
     setTasks(tasks.filter((task)=> task.id !== id))
+  }
+// create function to add task to the displayed tasks
+
+// function to toggle reminder
+  const toggleReminder = (id) => {
+    setTasks(
+      tasks.map((task)=>{
+      return  task.id === id ? {...task, reminder: !task.reminder} : task
+      })
+    )
   }
 
   return (
     <div className="container">
         <Header />
-        <Tasks tasks={tasks} onDelete={deleteTask} />
+        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
     </div>
   );
 }
