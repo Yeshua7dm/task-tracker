@@ -19,9 +19,16 @@ function App() {
     getTasks()
   }, [])
 
-  // fetch the tasks
+  // fetch all the tasks
   const fetchTasks = async() => {
     const response = await fetch('http://localhost:5000/tasks')
+    const data = await response.json()
+    return data
+  }
+
+  // fetch a singular task by id
+  const fetchTask = async(id) => {
+    const response = await fetch(`http://localhost:5000/tasks/${id}`)
     const data = await response.json()
     return data
   }
@@ -52,10 +59,24 @@ function App() {
   }
 
 // function to toggle reminder
-  const toggleReminder = (id) => {
+  const toggleReminder = async(id) => {
+    const selectedTask = await fetchTask(id)
+    const updated = {...selectedTask, reminder: !selectedTask.reminder}
+
+// update the task
+    const resp = await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: "PUT",
+      headers : {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updated)
+    })
+    const data = await resp.json()
+
     setTasks(
       tasks.map((task)=>{
-      return  task.id === id ? {...task, reminder: !task.reminder} : task
+      return  task.id === id ? {...task, reminder: data.reminder} : task
+      // return  task.id === id ? {...task, reminder: !task.reminder} : task
       })
     )
   }

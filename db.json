@@ -10,7 +10,7 @@
       "id": 3,
       "text": "steal a football game",
       "day": "Jun 5th at 2pm",
-      "reminder": true
+      "reminder": false
     },
     {
       "id": 4,
@@ -21,7 +21,7 @@
     {
       "text": "buy a ram",
       "day": "9am tomorrow",
-      "reminder": true,
+      "reminder": false,
       "id": 5
     }
   ]
