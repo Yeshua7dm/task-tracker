@@ -1,10 +1,15 @@
 import Header from "./components/Header";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
+import Footer from "./components/Footer";
+import About from "./components/About";
 
 // use hooks for state in functional component
 // replaces the need for class components
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+// import { Link } from "react-router-dom";
+
 
 function App() {
   const [showForm, setShowForm] = useState(false)
@@ -82,11 +87,23 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <Router>
+      <div className="container">
         <Header onAddNew={()=> setShowForm(!showForm)} toggleAdd={showForm} />
-        {showForm && <AddTask onAdd={addTask} />}
-        <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+        {/* route to add new task and see tasks */}
+        <Route path='/' exact render={(props) => (
+          <>
+            {showForm && <AddTask onAdd={addTask} />}
+            <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+          </>
+        )} />
+
+        {/* route for about component */}
+        <Route path='/about' component={About} />
+        <Footer/>
     </div>
+    </Router>
+    
   );
 }
 

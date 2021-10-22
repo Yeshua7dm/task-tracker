@@ -21,7 +21,8 @@ const AddTask = ({onAdd}) => {
     }
 
     return (
-        <form className='add=form'>
+        <div>
+            <form className='add=form'>
             <div className='form-control'>
                 <label htmlFor="Task">Task</label>
                 <input required type="text" value={text} onChange={(e)=>setText(e.target.value)} placeholder='Add Task' />
@@ -37,6 +38,7 @@ const AddTask = ({onAdd}) => {
             
             <input className='btn btn-block' type="submit" value="Save Task" onClick={onSubmit} />
         </form>
+        </div>
     )
 }
 
